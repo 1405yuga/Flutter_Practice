@@ -47,8 +47,11 @@ class HelloFlutter extends StatelessWidget{
         backgroundColor: Colors.lightGreenAccent,
       ),
       body: Container(
+        height: 200,
+        width: double.infinity,
         alignment: Alignment.center,
-        child: const Text("Hello world!!"),
+        color: Colors.amberAccent,
+        child: const Text("Hello world!!", style: TextStyle(fontSize: 20),),
       ),
     );
   }
