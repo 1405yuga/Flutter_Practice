@@ -37,9 +37,15 @@ class MyApp extends StatelessWidget {
 }
 
 class HelloFlutter extends StatelessWidget{
+  const HelloFlutter({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("New App"),
+        backgroundColor: Colors.lightGreenAccent,
+      ),
       body: Container(
         alignment: Alignment.center,
         child: const Text("Hello world!!"),
