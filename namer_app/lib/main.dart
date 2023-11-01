@@ -48,11 +48,32 @@ class MyAppState extends ChangeNotifier {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
 
   @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  var selectedPosition = 0;
+
+  @override
   Widget build(BuildContext context) {
+
+    Widget page;
+    switch(selectedPosition){
+      case 0 :
+        page = GeneratePage();
+        break;
+      case 1 :
+        page = PlaceHolder();
+        break;
+      default:
+        throw UnimplementedError('no widget for $selectedPosition');
+
+    }
+
     return Scaffold(
         appBar: AppBar(
           title: Text('Namer App'),
@@ -67,9 +88,11 @@ class MyHomePage extends StatelessWidget {
                       icon: Icon(Icons.home), label: Text('Home')),
                   NavigationRailDestination(
                       icon: Icon(Icons.favorite), label: Text('Favourites'))
-                ], selectedIndex: 0,
+                ], selectedIndex: selectedPosition,
                 onDestinationSelected: (value) {
-                  print("Destination selected");
+                  setState(() {
+                    selectedPosition = value;
+                  });;
                 },
               ),
             ),
@@ -78,13 +101,21 @@ class MyHomePage extends StatelessWidget {
                   .of(context)
                   .colorScheme
                   .primaryContainer,
-              child: GeneratePage(),
+              child: page,
             ))
           ],
         )
     );
   }
 }
+
+class PlaceHolder extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
 
 class GeneratePage extends StatelessWidget {
   @override
