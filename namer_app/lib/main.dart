@@ -63,35 +63,22 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Namer App'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            BigCard(pair: pair),
-            SizedBox(
-              height: 20,
+      body: Row(
+        children: [
+          SafeArea(
+            child: NavigationRail(
+              extended: false,
+              destinations: [
+                NavigationRailDestination(icon: Icon(Icons.home), label: Text('Home')),
+                NavigationRailDestination(icon: Icon(Icons.favorite), label: Text('Favourites'))
+              ], selectedIndex: 0,
+              onDestinationSelected: (value){
+                print("Destination selected");
+              },
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton.icon(
-                  onPressed: () {
-                    appState.toggleFavourite();
-                  },
-                  icon: Icon(iconData),
-                  label: Text('Like'),
-                ),
-                SizedBox(width: 10),
-                ElevatedButton(
-                    onPressed: () {
-                      appState.getNext();
-                    },
-                    child: Text('Next')),
-              ],
-            )
-          ],
-        ),
-      ),
+          ),
+        ],
+      )
     );
   }
 }
