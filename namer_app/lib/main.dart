@@ -66,8 +66,8 @@ class _MyHomePageState extends State<MyHomePage> {
         page = GeneratePage();
         break;
       case 1:
-        // creates cross mark on UI - ie Unfinished page
-        page = Placeholder();
+        // creates cross mark on UI - ie Unfinished page : Placeholder()
+        page = FavoritePage();
         break;
       default:
         throw UnimplementedError('no widget for $selectedPosition');
@@ -107,6 +107,21 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             ));
       }
+    );
+  }
+}
+
+class FavoritePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    var appState = context.watch<MyAppState>();
+
+    return Column(
+      children: [
+        Text('Following are favorite words'),
+        for(var word in appState.favorites)
+          Text("${word.asLowerCase}"),
+      ],
     );
   }
 }
