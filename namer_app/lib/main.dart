@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         title: 'Namer App',
         theme: ThemeData(
           colorScheme:
-          ColorScheme.fromSeed(seedColor: Color.fromRGBO(0, 255, 0, 1.0)),
+              ColorScheme.fromSeed(seedColor: Color.fromRGBO(0, 255, 0, 1.0)),
           useMaterial3: true,
         ),
         home: const MyHomePage(),
@@ -60,18 +60,17 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     Widget page;
-    switch(selectedPosition){
-      case 0 :
+    switch (selectedPosition) {
+      case 0:
         page = GeneratePage();
         break;
-      case 1 :
-        page = PlaceHolder();
+      case 1:
+        // creates cross mark on UI - ie Unfinished page
+        page = Placeholder();
         break;
       default:
         throw UnimplementedError('no widget for $selectedPosition');
-
     }
 
     return Scaffold(
@@ -88,34 +87,25 @@ class _MyHomePageState extends State<MyHomePage> {
                       icon: Icon(Icons.home), label: Text('Home')),
                   NavigationRailDestination(
                       icon: Icon(Icons.favorite), label: Text('Favourites'))
-                ], selectedIndex: selectedPosition,
+                ],
+                selectedIndex: selectedPosition,
                 onDestinationSelected: (value) {
                   setState(() {
                     selectedPosition = value;
-                  });;
+                  });
+                  ;
                 },
               ),
             ),
-            Expanded(child: Container(
-              color: Theme
-                  .of(context)
-                  .colorScheme
-                  .primaryContainer,
+            Expanded(
+                child: Container(
+              color: Theme.of(context).colorScheme.primaryContainer,
               child: page,
             ))
           ],
-        )
-    );
+        ));
   }
 }
-
-class PlaceHolder extends StatelessWidget{
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
-
 
 class GeneratePage extends StatelessWidget {
   @override
