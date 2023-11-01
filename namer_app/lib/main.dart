@@ -116,11 +116,13 @@ class FavoritePage extends StatelessWidget {
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
 
-    return Column(
+    return ListView(
       children: [
-        Text('Following are favorite words'),
+        Title(color: Theme.of(context).colorScheme.onPrimary, child: Text('Your liked',style: TextStyle(fontSize: 20),)),
         for(var word in appState.favorites)
-          Text("${word.asLowerCase}"),
+          ListTile(
+            subtitle: Text(word.asLowerCase),
+          )
       ],
     );
   }
