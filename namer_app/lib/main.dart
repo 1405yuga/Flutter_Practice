@@ -73,37 +73,41 @@ class _MyHomePageState extends State<MyHomePage> {
         throw UnimplementedError('no widget for $selectedPosition');
     }
 
-    return Scaffold(
-        appBar: AppBar(
-          title: Text('Namer App'),
-        ),
-        body: Row(
-          children: [
-            SafeArea(
-              child: NavigationRail(
-                extended: false,
-                destinations: [
-                  NavigationRailDestination(
-                      icon: Icon(Icons.home), label: Text('Home')),
-                  NavigationRailDestination(
-                      icon: Icon(Icons.favorite), label: Text('Favourites'))
-                ],
-                selectedIndex: selectedPosition,
-                onDestinationSelected: (value) {
-                  setState(() {
-                    selectedPosition = value;
-                  });
-                  ;
-                },
-              ),
+    //LayoutBuilder's builder callback is called every time the constraints change
+    return LayoutBuilder(builder: (context, constraints) {
+        return Scaffold(
+            appBar: AppBar(
+              title: Text('Namer App'),
             ),
-            Expanded(
-                child: Container(
-              color: Theme.of(context).colorScheme.primaryContainer,
-              child: page,
-            ))
-          ],
-        ));
+            body: Row(
+              children: [
+                SafeArea(
+                  child: NavigationRail(
+                    extended: constraints.maxWidth>=600, // to expand navigation rail when larger screen
+                    destinations: [
+                      NavigationRailDestination(
+                          icon: Icon(Icons.home), label: Text('Home')),
+                      NavigationRailDestination(
+                          icon: Icon(Icons.favorite), label: Text('Favourites'))
+                    ],
+                    selectedIndex: selectedPosition,
+                    onDestinationSelected: (value) {
+                      setState(() {
+                        selectedPosition = value;
+                      });
+                      ;
+                    },
+                  ),
+                ),
+                Expanded(
+                    child: Container(
+                  color: Theme.of(context).colorScheme.primaryContainer,
+                  child: page,
+                ))
+              ],
+            ));
+      }
+    );
   }
 }
 
