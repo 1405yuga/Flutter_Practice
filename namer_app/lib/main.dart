@@ -153,7 +153,7 @@ class DisplayFavorites extends StatelessWidget {
     return GridView.count(
       crossAxisCount: 2,
       padding: EdgeInsets.zero,
-      childAspectRatio: 2, // to reduce extra spacing - ratio = width/height
+      childAspectRatio: 3, // to reduce extra spacing - ratio = width/height
       children: List.generate(appState.favorites.length, (index) {
         return Row(
           children: [
