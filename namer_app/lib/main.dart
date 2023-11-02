@@ -125,18 +125,39 @@ class FavoritePage extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
         ),
-        
-        Expanded(child: GridView.count(
-          crossAxisCount: 2,
-          children: [
-            for (var word in appState.favorites)
-              ListTile(
-                title: Text(word.asLowerCase),
-              )
-          ],
-        ),)
+        Expanded(
+          child: DisplayFavorites(appState: appState),
+        )
       ],
-      
+    );
+  }
+}
+
+class DisplayFavorites extends StatelessWidget {
+  const DisplayFavorites({
+    super.key,
+    required this.appState,
+  });
+
+  final MyAppState appState;
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.count(
+      crossAxisCount: 2,
+      padding: EdgeInsets.zero,
+      childAspectRatio: 2, // to reduce extra spacing - ratio = width/height
+      children: List.generate(appState.favorites.length, (index) {
+        return Row(
+          children: [
+            Icon(
+              Icons.delete_outline,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+            Text(appState.favorites.elementAt(index).asLowerCase)
+          ],
+        );
+      }),
     );
   }
 }
