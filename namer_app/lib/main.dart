@@ -75,39 +75,39 @@ class _MyHomePageState extends State<MyHomePage> {
 
     //LayoutBuilder's builder callback is called every time the constraints change
     return LayoutBuilder(builder: (context, constraints) {
-        return Scaffold(
-            appBar: AppBar(
-              title: Text('Namer App'),
-            ),
-            body: Row(
-              children: [
-                SafeArea(
-                  child: NavigationRail(
-                    extended: constraints.maxWidth>=600, // to expand navigation rail when larger screen
-                    destinations: [
-                      NavigationRailDestination(
-                          icon: Icon(Icons.home), label: Text('Home')),
-                      NavigationRailDestination(
-                          icon: Icon(Icons.favorite), label: Text('Favourites'))
-                    ],
-                    selectedIndex: selectedPosition,
-                    onDestinationSelected: (value) {
-                      setState(() {
-                        selectedPosition = value;
-                      });
-                      ;
-                    },
-                  ),
+      return Scaffold(
+          appBar: AppBar(
+            title: Text('Namer App'),
+          ),
+          body: Row(
+            children: [
+              SafeArea(
+                child: NavigationRail(
+                  extended: constraints.maxWidth >= 600,
+                  // to expand navigation rail when larger screen
+                  destinations: [
+                    NavigationRailDestination(
+                        icon: Icon(Icons.home), label: Text('Home')),
+                    NavigationRailDestination(
+                        icon: Icon(Icons.favorite), label: Text('Favourites'))
+                  ],
+                  selectedIndex: selectedPosition,
+                  onDestinationSelected: (value) {
+                    setState(() {
+                      selectedPosition = value;
+                    });
+                    ;
+                  },
                 ),
-                Expanded(
-                    child: Container(
-                  color: Theme.of(context).colorScheme.primaryContainer,
-                  child: page,
-                ))
-              ],
-            ));
-      }
-    );
+              ),
+              Expanded(
+                  child: Container(
+                color: Theme.of(context).colorScheme.primaryContainer,
+                child: page,
+              ))
+            ],
+          ));
+    });
   }
 }
 
@@ -116,14 +116,27 @@ class FavoritePage extends StatelessWidget {
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
 
-    return ListView(
+    return Column(
       children: [
-        Title(color: Theme.of(context).colorScheme.onPrimary, child: Text('Your liked',style: TextStyle(fontSize: 20),)),
-        for(var word in appState.favorites)
-          ListTile(
-            subtitle: Text(word.asLowerCase),
-          )
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            'You liked ${appState.favorites.length} words',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ),
+        ),
+        
+        Expanded(child: GridView.count(
+          crossAxisCount: 2,
+          children: [
+            for (var word in appState.favorites)
+              ListTile(
+                title: Text(word.asLowerCase),
+              )
+          ],
+        ),)
       ],
+      
     );
   }
 }
@@ -189,7 +202,7 @@ class BigCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Text(
-          "${pair.first} ${pair.second}",
+          pair.asLowerCase,
           style: myTextStyle,
         ),
       ),
