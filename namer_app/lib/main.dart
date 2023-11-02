@@ -46,6 +46,13 @@ class MyAppState extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  void deleteFavourite(WordPair word) {
+    if (favorites.contains(word)) {
+      favorites.remove(word);
+    }
+    notifyListeners();
+  }
 }
 
 class MyHomePage extends StatefulWidget {
@@ -150,8 +157,11 @@ class DisplayFavorites extends StatelessWidget {
       children: List.generate(appState.favorites.length, (index) {
         return Row(
           children: [
-            Icon(
-              Icons.delete_outline,
+            IconButton(
+              onPressed: () {
+                appState.deleteFavourite(appState.favorites.elementAt(index));
+              },
+              icon: Icon(Icons.delete_outline),
               color: Theme.of(context).colorScheme.primary,
             ),
             Text(appState.favorites.elementAt(index).asLowerCase)
